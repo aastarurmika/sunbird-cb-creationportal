@@ -410,11 +410,11 @@ export class InitService {
         if (e.status === 419) {
           //@ts-ignore: Unreachable code error
           let url = window["env"]["sitePath"].replace('https', 'http')
-          let redirectUrl = `${url}`
-          //const state = uuid()
+          let redirectUrl = `${url}protected/v8/resource/?q=/author/cbp/me`
+          const state = uuid()
           // @ts-ignore: Unreachable code error
           // tslint:disable-next-line:max-line-length
-          const keycloakurl = `${window["env"]["azureHost"]}/auth/realms/sunbird/protocol/openid-connect/logout?redirect_uri=${encodeURIComponent(redirectUrl)}`
+          const keycloakurl = `${window["env"]["azureHost"]}/auth/realms/sunbird/protocol/openid-connect/auth?client_id=portal&state=${state}&redirect_uri=${encodeURIComponent(redirectUrl)}&auth_callback=1&scope=openid&response_type=code`
           window.location.href = keycloakurl
         }
         // window.location.href = `${ redirectUrl } apis / reset`
