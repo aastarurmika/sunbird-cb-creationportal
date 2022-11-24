@@ -506,7 +506,6 @@ export class CourseCollectionComponent implements OnInit, OnDestroy {
       )
     } else {
       if (nextAction) {
-        this.update()
         this.action(nextAction)
       } else {
         this.snackBar.openFromComponent(NotificationComponent, {
