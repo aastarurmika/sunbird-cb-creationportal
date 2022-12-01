@@ -547,17 +547,13 @@ export class MyContentComponent implements OnInit, OnDestroy {
 
     switch (this.status) {
       case 'published':
-        // if (this.accessService.hasRole(['content_creator'])) {
-        //   requestData.request.filters['createdBy'] = (this.configService.userProfile) ? this.configService.userProfile.userId : ''
-        // }
-        // else
-        //   if (this.accessService.hasRole(['content_reviewer'])) {
-        //     requestData.request.filters['reviewerIDs'] = (this.configService.userProfile) ? [this.configService.userProfile.userId] : []
-        //   } else
-
-            if (this.accessService.hasRole(['content_publisher'])) {
-              requestData.request.filters['publisherIDs'] = (this.configService.userProfile) ? [this.configService.userProfile.userId] : []
-            }
+        if (this.accessService.hasRole(['content_creator'])) {
+          requestData.request.filters['createdBy'] = (this.configService.userProfile) ? this.configService.userProfile.userId : ''
+        } else if (this.accessService.hasRole(['content_reviewer'])) {
+          requestData.request.filters['reviewerIDs'] = (this.configService.userProfile) ? [this.configService.userProfile.userId] : []
+        } else if (this.accessService.hasRole(['content_publisher'])) {
+          requestData.request.filters['publisherIDs'] = (this.configService.userProfile) ? [this.configService.userProfile.userId] : []
+        }
 
         break
       case 'publish':
@@ -579,8 +575,8 @@ export class MyContentComponent implements OnInit, OnDestroy {
       case 'reviewed':
         requestData.request.filters['reviewStatus'] = 'Reviewed'
         if (this.accessService.hasRole(['content_publisher'])) {
-              requestData.request.filters['publisherIDs'] = (this.configService.userProfile) ? [this.configService.userProfile.userId] : []
-            }
+          requestData.request.filters['publisherIDs'] = (this.configService.userProfile) ? [this.configService.userProfile.userId] : []
+        }
         break
       case 'inreview':
         requestData.request.filters['reviewStatus'] = 'InReview'

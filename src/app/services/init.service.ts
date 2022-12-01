@@ -418,7 +418,7 @@ export class InitService {
         //   window.location.href = keycloakurl
         // }
         // window.location.href = `${ redirectUrl } apis / reset`
-        // throw new Error('Invalid user')
+        throw new Error('Invalid user')
       }
     } else {
       return { group: [], profileDetailsStatus: true, roles: new Set(['Public']), tncStatus: true, isActive: true }

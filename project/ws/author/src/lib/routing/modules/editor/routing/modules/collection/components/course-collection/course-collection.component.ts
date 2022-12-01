@@ -132,7 +132,6 @@ export class CourseCollectionComponent implements OnInit, OnDestroy {
       (data: any) => {
         if (data) {
           this.save('upload')
-          //this.update()
         }
       })
     // this.initService.editCourseMessage.subscribe(
@@ -192,7 +191,6 @@ export class CourseCollectionComponent implements OnInit, OnDestroy {
         this.viewMode = 'meta'
       }
     })
-
     if (this.activateRoute.parent && this.activateRoute.parent.parent) {
       this.routerSubscription = this.activateRoute.parent.parent.data.subscribe(data => {
 
@@ -452,7 +450,6 @@ export class CourseCollectionComponent implements OnInit, OnDestroy {
 
       this.triggerSave().subscribe(
         () => {
-
           if (nextAction) {
             this.action(nextAction)
           }
@@ -1109,7 +1106,7 @@ export class CourseCollectionComponent implements OnInit, OnDestroy {
       this.editorService.readcontentV3(this.contentService.parentContent).subscribe((data: any) => {
         /* tslint:disable-next-line */
         console.log(data)
-        if (data) {
+        if (data && data.lastPublishedBy === undefined) {
           let obj = {
             "request": {
               "courseId": this.contentService.parentContent,
