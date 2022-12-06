@@ -20,9 +20,10 @@ export class ContentCardComponent implements OnInit {
   pageName = false
   @Output() action = new EventEmitter<any>()
   isBaseContent: Boolean = true
+  CourseStatusName: string = ''
   constructor(private accessService: AccessControlService,
-              private authInitService: AuthInitService,
-              private router: Router) { }
+    private authInitService: AuthInitService,
+    private router: Router) { }
 
   ngOnInit() {
     if ((this.router.url).includes('published')) {
@@ -41,6 +42,22 @@ export class ContentCardComponent implements OnInit {
       )
       : this.ordinals.subTitles
     this.userId = this.accessService.userId
+    this.getCourseStatusName()
+  }
+
+  getCourseStatusName(): void {
+    if (this.data.status == 'Draft') {
+      this.CourseStatusName = 'Draft'
+    }
+    else if (this.data.status == 'Review') {
+      this.CourseStatusName = 'Sent for review'
+    }
+    else if (this.data.status == 'Live') {
+      this.CourseStatusName = 'Published'
+    }
+    else if (this.data.status == 'Retired') {
+      this.CourseStatusName = 'Retired'
+    }
   }
 
   getName(lang: string): string {
