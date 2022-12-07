@@ -87,6 +87,12 @@ export class MyContentComponent implements OnInit, OnDestroy {
   isAdmin = false
   currentAction: 'author' | 'reviewer' | 'expiry' | 'deleted' = 'author'
   listview = true
+  links = ['Draft', 'Sent for review', 'Published', 'Retired'];
+  activeLink = this.links[0];
+  isSelectedColor: boolean = true
+  isSelectedReviewCourse: boolean = false;
+  isSelectedPublishCourse: boolean = false;
+  link: string = ''
   @ViewChild('searchInput', { static: false }) searchInputElem: ElementRef<any> = {} as ElementRef<
     any
   >
@@ -157,6 +163,61 @@ export class MyContentComponent implements OnInit, OnDestroy {
     this.allowExpiry = this.accessService.authoringConfig.allowExpiry
     this.allowReview = this.canShow('review') && this.accessService.authoringConfig.allowReview
     this.allowPublish = this.canShow('publish') && this.accessService.authoringConfig.allowPublish
+  }
+
+  onClickReviewCourse(status: string) {
+    this.link = status
+    this.activeLink = status
+    if (status == 'Sent for review') {
+      this.isSelectedColor = false
+      this.isSelectedPublishCourse = false
+      this.isSelectedReviewCourse = true
+    }
+    else if (status == 'Published') {
+      this.isSelectedColor = false
+      this.isSelectedReviewCourse = false
+      this.isSelectedPublishCourse = true
+    }
+
+    this.navigateContents(status)
+  }
+
+  navigateContents(data: string): void {
+    switch (data) {
+      case 'Draft':
+        this.link = 'Draft'
+        this.activeLink = 'Draft'
+        this.isSelectedColor = true
+        this.isSelectedPublishCourse = false
+        this.isSelectedReviewCourse = false
+        this.router.navigate(['/author/my-content'], { queryParams: { status: 'draft' } })
+        break
+
+      case 'Sent for review':
+        this.link = 'Sent for review'
+        this.activeLink = 'Sent for review'
+        this.isSelectedColor = false
+        this.isSelectedPublishCourse = false
+        this.isSelectedReviewCourse = true
+        this.router.navigate(['/author/my-content'], { queryParams: { status: 'inreview' } })
+        break
+
+      case 'Published':
+        this.link = 'Published'
+        this.activeLink = 'Published'
+        this.isSelectedColor = false
+        this.isSelectedReviewCourse = false
+        this.isSelectedPublishCourse = true
+        this.router.navigate(['/author/my-content'], { queryParams: { status: 'published' } })
+        break
+
+      case 'Retired':
+        this.link = 'Retired'
+        this.activeLink = 'Retired'
+        this.router.navigate(['/author/my-content'], { queryParams: { status: 'unpublished' } })
+        break
+    }
+
   }
 
   fetchStatus() {
