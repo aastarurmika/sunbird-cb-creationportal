@@ -1991,8 +1991,8 @@ export class ModuleCreationComponent implements OnInit, AfterViewInit {
       })
     }
   }
-  click(action: any, type?: string) {
-    this.actions.emit({ action, type })
+  click(actions: string, type?: string) {
+    this.actions.emit({ actions, type })
   }
   async save() {
     if (this.resourseSelected !== '') {
